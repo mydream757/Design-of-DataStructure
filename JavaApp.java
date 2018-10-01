@@ -3,29 +3,30 @@ import java.util.Collections;
 import java.util.Comparator;
 
 public class JavaApp {
-	public static ArrayList<Movie> mList = new ArrayList<Movie>();
-	public static ArrayList<String> cList = new ArrayList<String>();
-	public static ArrayList<Person> pList = new ArrayList<Person>();
+	
+	
 	
 	public static void main(String[] args) {
 		System.out.println("The Social Graph of Actors and Actress\n");
 		FileHandler fHandler = new FileHandler();
-		OpenApi web = new OpenApi();	
+		NodeHandler nHandler = new NodeHandler();
+		OpenApi movies = new OpenApi();	
 		
 		
-		//fHandler.readInfo("Information.txt");
+		fHandler.readInfo("Result.txt");
 		
-		//Test: 10 , base: cList.size()
+		//Test: 10 ,  cList.size()
 		fHandler.readCode();
-		for(int i=0; i<cList.size(); i++) {
-			String code = cList.get(i);
-			Movie movie = web.Connect(code);
-			mList.add(movie);
-			NodeHandler.insertEdge(movie);
-			NodeHandler.showPeople();
+		/*
+		for(int i=0; i<fHandler.cList.size(); i++) {
+			String code = fHandler.cList.get(i);
+			Movie movie = movies.Connect(code);
+			movies.mList.add(movie);
+			nHandler.insertEdge(movie);
+			nHandler.showPeople();
 					
 		}
-		
+		*/
 		
 		/*	영화의 배우목록을 봄	
 		for(int i=0; i<movie.getActors().size(); i++) {
@@ -34,8 +35,11 @@ public class JavaApp {
 		*/
 		
 		//NameSort ascending = new NameSort();
+		/*	정렬
 		AdjSort ascending = new AdjSort();
-		Collections.sort(pList,ascending);
+		Collections.sort(NodeHandler.pList,ascending);
+		*/
+		
 		/*
 		 * ArrayList<Person> path = new ArrayList<Person>();
 		path = Person.Bfs("A", "I");
@@ -46,7 +50,17 @@ public class JavaApp {
 		}
 		System.out.println("Distance: "+path.size());
 		*/
-		fHandler.writeInfo("Result.txt");
+		
+		
+		for(int i=0; i<NodeHandler.pList.size(); i++) {
+			float average = nHandler.calAverage(NodeHandler.pList.get(i));
+			NodeHandler.pList.get(i).average = average;
+			System.out.println(NodeHandler.pList.get(i).getName()+"의 인접노드: "+NodeHandler.pList.get(i).adjSize() +" 평균 중심지수: "+average);
+			
+		}
+		fHandler.writeAverage("average.txt");
+		fHandler.writeInfo("Information.txt");
+		
 		System.out.println("Good bye");
 		
 	}

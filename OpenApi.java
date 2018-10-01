@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
@@ -7,6 +9,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 public class OpenApi {
+	public ArrayList<Movie> mList = new ArrayList<Movie>();
 	
 	String norm = "http://www.kobis.or.kr/kobisopenapi/webservice/rest/movie/searchMovieInfo.xml";
 	String key = "47254930c7c1bb050f3261d23bb8be10";
@@ -55,19 +58,19 @@ public class OpenApi {
 				
 				/* actors 태그로 노드리스트 재정의 */
 				nList = doc.getElementsByTagName("actor");
-				System.out.println("파싱할 리스트 수 : "+ nList.getLength());
+				//System.out.println("파싱할 리스트 수 : "+ nList.getLength());
 				
 				for(int temp = 0; temp < nList.getLength(); temp++){		
 					Node nNode = nList.item(temp);
 					if(nNode.getNodeType() == Node.ELEMENT_NODE){
 										
 						Element eElement = (Element) nNode;
-						System.out.println("######################");
+						//System.out.println("######################");
 						//System.out.println(eElement.getTextContent()); //전체 컨텐트 가져옴
 						/* 파싱 확인 */
 						String name = getTagValue("peopleNm", eElement);
-						System.out.println("배우 이름  : " + name);
-						System.out.println("영문 이름  : " + getTagValue("peopleNmEn", eElement));
+						//System.out.println("배우 이름  : " + name);
+						//System.out.println("영문 이름  : " + getTagValue("peopleNmEn", eElement));
 						movie.addActors(name);
 					}	// if end
 				}	// for end
